@@ -64,6 +64,26 @@
             max-width: 600px;
             margin: auto;
         }
+        .example {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .solution-btn {
+            background-color: #2ecc71;
+            margin: 10px 0;
+        }
+        .solution-btn:hover {
+            background-color: #27ae60;
+        }
+        .solution {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f1f8ff;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -103,9 +123,55 @@
         </div>
 
         <div class="section">
-            <h2>不同溫度下的方均根速率分布</h2>
+            <h2>方均根速率分布</h2>
             <div class="chart-container">
                 <canvas id="speedChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 新增例題部分 -->
+        <div class="section">
+            <h2>高中物理例題</h2>
+            
+            <div class="example">
+                <h3>基礎例題 1：</h3>
+                <p>在室溫（25°C）下，氮氣（N₂）分子的方均根速率為多少？（氮氣的摩爾質量為 28 g/mol）</p>
+                <button class="solution-btn" onclick="toggleSolution('solution1')">顯示解答</button>
+                <div id="solution1" class="solution" style="display: none;">
+                    <p><strong>解答：</strong></p>
+                    <p>已知條件：</p>
+                    <ul>
+                        <li>溫度 T = 25°C = 298 K</li>
+                        <li>摩爾質量 M = 28 g/mol = 0.028 kg/mol</li>
+                        <li>氣體常數 R = 8.314 J/(mol·K)</li>
+                    </ul>
+                    <p>代入公式 \(v_{rms} = \sqrt{\frac{3RT}{M}}\)：</p>
+                    <p>\(v_{rms} = \sqrt{\frac{3 \times 8.314 \times 298}{0.028}} = 517\) m/s</p>
+                </div>
+            </div>
+
+            <div class="example">
+                <h3>基礎例題 2：</h3>
+                <p>某氣體在 300K 時的方均根速率為 400 m/s，請問這個氣體的摩爾質量為多少？</p>
+                <button class="solution-btn" onclick="toggleSolution('solution2')">顯示解答</button>
+                <div id="solution2" class="solution" style="display: none;">
+                    <p><strong>解答：</strong></p>
+                    <p>使用公式 \(v_{rms} = \sqrt{\frac{3RT}{M}}\) 反推：</p>
+                    <p>\(400 = \sqrt{\frac{3 \times 8.314 \times 300}{M}}\)</p>
+                    <p>\(M = \frac{3 \times 8.314 \times 300}{400^2} = 0.047\) kg/mol = 47 g/mol</p>
+                </div>
+            </div>
+
+            <div class="example">
+                <h3>進階例題：</h3>
+                <p>在相同溫度下，氫氣(H₂, M = 2 g/mol)和氧氣(O₂, M = 32 g/mol)的方均根速率比為何？</p>
+                <button class="solution-btn" onclick="toggleSolution('solution3')">顯示解答</button>
+                <div id="solution3" class="solution" style="display: none;">
+                    <p><strong>解答：</strong></p>
+                    <p>對於兩種氣體，溫度T和氣體常數R都相同，因此：</p>
+                    <p>\(\frac{v_{rms(H_2)}}{v_{rms(O_2)}} = \sqrt{\frac{M_{O_2}}{M_{H_2}}} = \sqrt{\frac{32}{2}} = 4\)</p>
+                    <p>這說明在相同溫度下，氫氣分子的方均根速率是氧氣的4倍。這也解釋了為什麼較輕的氣體分子逸散速率較快。</p>
+                </div>
             </div>
         </div>
     </div>
@@ -176,6 +242,15 @@
                     }
                 }
             });
+        }
+
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+            } else {
+                solution.style.display = 'none';
+            }
         }
 
         // 頁面載入時初始化圖表
