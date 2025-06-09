@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方均根速率介紹</title>
+    <!-- MathJax CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .calculator {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .chart-container {
+            margin: 20px 0;
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>方均根速率 (Root Mean Square Speed)</h1>
+        
+        <div class="section">
+            <h2>什麼是方均根速率？</h2>
+            <p>方均根速率是描述氣體分子運動的重要物理量之一。它代表了氣體分子速率的統計平均值，考慮了所有分子的速率分布。</p>
+            <p>方均根速率的計算公式為：</p>
+            <div style="text-align: center;">
+                \[v_{rms} = \sqrt{\frac{3RT}{M}} = \sqrt{\frac{3k_BT}{m}}\]
+            </div>
+            <p>其中：</p>
+            <ul>
+                <li>\(v_{rms}\) 是方均根速率</li>
+                <li>\(R\) 是氣體常數 (8.314 J/(mol·K))</li>
+                <li>\(T\) 是絕對溫度 (K)</li>
+                <li>\(M\) 是氣體的摩爾質量 (kg/mol)</li>
+                <li>\(k_B\) 是波茲曼常數</li>
+                <li>\(m\) 是分子質量</li>
+            </ul>
+        </div>
+
+        <div class="calculator">
+            <h2>方均根速率計算器</h2>
+            <div>
+                <label for="temperature">溫度 (K):</label>
+                <input type="number" id="temperature" value="298">
+            </div>
+            <div>
+                <label for="molarMass">摩爾質量 (g/mol):</label>
+                <input type="number" id="molarMass" value="28">
+            </div>
+            <button onclick="calculateRMS()">計算</button>
+            <div id="result"></div>
+        </div>
+
+        <div class="section">
+            <h2>不同溫度下的方均根速率分布</h2>
+            <div class="chart-container">
+                <canvas id="speedChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateRMS() {
+            const T = parseFloat(document.getElementById('temperature').value);
+            const M = parseFloat(document.getElementById('molarMass').value) / 1000; // 轉換為 kg/mol
+            const R = 8.314; // J/(mol·K)
+            
+            const vrms = Math.sqrt((3 * R * T) / M);
+            document.getElementById('result').innerHTML = `
+                方均根速率: ${vrms.toFixed(2)} m/s
+            `;
+
+            updateChart(T, M);
+        }
+
+        function updateChart(temperature, molarMass) {
+            const canvas = document.getElementById('speedChart');
+            const ctx = canvas.getContext('2d');
+            
+            // 清除現有的圖表
+            if (window.speedDistributionChart) {
+                window.speedDistributionChart.destroy();
+            }
+
+            // 產生速度數據點
+            const speeds = [];
+            const probabilities = [];
+            const R = 8.314;
+            
+            for (let v = 0; v <= 2000; v += 50) {
+                speeds.push(v);
+                // Maxwell-Boltzmann 分布
+                const probability = 4 * Math.PI * Math.pow(v, 2) * 
+                    Math.pow(molarMass / (2 * Math.PI * R * temperature), 1.5) *
+                    Math.exp(-molarMass * v * v / (2 * R * temperature));
+                probabilities.push(probability);
+            }
+
+            window.speedDistributionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: speeds,
+                    datasets: [{
+                        label: '速率分布',
+                        data: probabilities,
+                        borderColor: '#3498db',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: '速率 (m/s)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: '相對機率'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 頁面載入時初始化圖表
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateRMS();
+        });
+    </script>
+</body>
+</html>
