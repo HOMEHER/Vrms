@@ -84,6 +84,12 @@
             background-color: #f1f8ff;
             border-radius: 4px;
         }
+        .theory-box {
+            background-color: #e9f7ef;
+            padding: 15px;
+            border-left: 4px solid #2ecc71;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -174,6 +180,135 @@
                 </div>
             </div>
         </div>
+
+        <div class="container">
+            <h1>從氣體動力論到方均根速率</h1>
+
+            <div class="section">
+                <h2>1. 氣體壓力的推導</h2>
+                <p>讓我們從最基本的觀念開始：氣體分子不斷地撞擊容器壁，這些撞擊產生了我們感受到的氣體壓力。</p>
+                
+                <div class="theory-box">
+                    <h3>推導步驟：</h3>
+                    <ol>
+                        <li>
+                            <p>想像一個邊長為 L 的正立方體容器，裡面有一個氣體分子：</p>
+                            <ul>
+                                <li>分子質量：m</li>
+                                <li>x 方向速度：v<sub>x</sub></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>分子撞擊容器壁時：</p>
+                            <ul>
+                                <li>動量變化：Δp = 2mv<sub>x</sub>（來回碰撞）</li>
+                                <li>碰撞時間間隔：Δt = 2L/v<sub>x</sub>（來回一次的時間）</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>根據牛頓第二定律，力等於動量變化率：</p>
+                            <div style="text-align: center;">
+                                \[F = \frac{\Delta p}{\Delta t} = \frac{2mv_x}{2L/v_x} = \frac{mv_x^2}{L}\]
+                            </div>
+                        </li>
+                        <li>
+                            <p>壓力是力除以面積：</p>
+                            <div style="text-align: center;">
+                                \[P = \frac{F}{A} = \frac{mv_x^2}{L^3} = \frac{mv_x^2}{V}\]
+                            </div>
+                        </li>
+                        <li>
+                            <p>考慮所有方向和 N 個分子：</p>
+                            <div style="text-align: center;">
+                                \[P = \frac{Nm\overline{v^2}}{3V}\]
+                            </div>
+                            <p>其中 \(\overline{v^2}\) 是速率平方的平均值</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <h2>2. 分子的平均動能與溫度</h2>
+                <p>接下來，我們來看看分子運動與溫度的關係。溫度其實就是分子平均動能的量度！</p>
+
+                <div class="theory-box">
+                    <h3>關鍵概念：</h3>
+                    <ol>
+                        <li>
+                            <p>一個分子的動能：</p>
+                            <div style="text-align: center;">
+                                \[E_k = \frac{1}{2}mv^2\]
+                            </div>
+                        </li>
+                        <li>
+                            <p>實驗發現：分子的平均動能正比於絕對溫度</p>
+                            <div style="text-align: center;">
+                                \[\overline{E_k} = \frac{1}{2}m\overline{v^2} = \frac{3}{2}k_BT\]
+                            </div>
+                            <p>其中 k<sub>B</sub> 是波茲曼常數，T 是絕對溫度</p>
+                        </li>
+                        <li>
+                            <p>將這個關係代入壓力公式：</p>
+                            <div style="text-align: center;">
+                                \[P = \frac{N}{V}k_BT\]
+                            </div>
+                            <p>這就是理想氣體方程式！</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <h2>3. 單原子理想氣體的內能</h2>
+                <p>現在我們來看看氣體的總能量（內能）。</p>
+
+                <div class="theory-box">
+                    <h3>推導過程：</h3>
+                    <ol>
+                        <li>
+                            <p>對於單原子氣體（如氦氣）：</p>
+                            <ul>
+                                <li>只有平動動能，沒有轉動和振動能</li>
+                                <li>每個分子的平均動能是 \(\frac{3}{2}k_BT\)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>總內能（N 個分子）：</p>
+                            <div style="text-align: center;">
+                                \[U = N\overline{E_k} = N \cdot \frac{3}{2}k_BT = \frac{3}{2}nRT\]
+                            </div>
+                            <p>其中 n 是氣體的摩爾數，R 是氣體常數</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <h2>4. 方均根速率</h2>
+                <p>最後，我們來看看分子的平均速度。方均根速率是一種特別有用的平均速度。</p>
+
+                <div class="theory-box">
+                    <h3>從前面的推導得到：</h3>
+                    <ol>
+                        <li>
+                            <p>我們知道：\(\frac{1}{2}m\overline{v^2} = \frac{3}{2}k_BT\)</p>
+                        </li>
+                        <li>
+                            <p>整理得到：\(\overline{v^2} = \frac{3k_BT}{m}\)</p>
+                        </li>
+                        <li>
+                            <p>方均根速率就是這個值的平方根：</p>
+                            <div style="text-align: center;">
+                                \[v_{rms} = \sqrt{\overline{v^2}} = \sqrt{\frac{3k_BT}{m}} = \sqrt{\frac{3RT}{M}}\]
+                            </div>
+                        </li>
+                    </ol>
+
+                    <h3>物理意義：</h3>
+                    <ul>
+                        <li>方均根速率代表氣體分子運動快慢的一種平均值</li>
+                        <li>溫度越高，分子運動越快</li>
+                        <li>分子質量越大，在相同溫度下運動越慢</li>
+                        <li>這就解釋了為什麼氫氣會比氧氣擴散得快！</li>
+                    </ul>
+                </div>
+            </div>
+
     </div>
 
     <script>
